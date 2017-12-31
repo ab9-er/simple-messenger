@@ -1,0 +1,2 @@
+Flask-SocketIO==2.9.3
+gevent-websocket==0.10.1

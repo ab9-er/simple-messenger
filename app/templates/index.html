@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Simple Web Chat</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.js"></script>
+        <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+            socket.on('connect', function() {
+                socket.emit('my_event', {data: 'Client connected!'});
+            });
+
+            socket.on('socket_response', function(msg) {
+                $('#incoming').append('<br>' + $('<div/>').text('Received: ' + msg.data).html());
+            });
+
+            $('form#outgoing').submit(function(event) {
+                socket.emit('my_event', {data: $('#outgoing_data').val()});
+                return false;
+            });
+
+            $('form#disconnect').submit(function(event) {
+                socket.emit('my_event', {data: 'Client disconnected!'});
+                socket.emit('disconnect_request');
+                return false;
+            });
+
+        });
+        </script>
+    </head>
+    <body>
+      <h2>Send Message:</h2>
+      <form id="outgoing" method="POST" action='#'>
+          <input type="text" name="outgoing_data" id="outgoing_data" placeholder="Message">
+          <input type="submit" value="Send Message">
+      </form>
+      <form id="disconnect" method="POST" action="#">
+        <input type="submit" value="Disconnect">
+    </form>
+      <h2>Incoming Messages:</h2>
+      <div id="incoming"></div>
+    </body>
+</html>

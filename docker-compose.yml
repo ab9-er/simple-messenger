@@ -1,0 +1,13 @@
+version: "2.1"
+
+services:
+
+  simple-messenger:
+    build: .
+    ports:
+      - 5000:5000
+    image: simple-messenger:latest
+    environment:
+      - ENV
+    volumes:
+      - ./app:/app
