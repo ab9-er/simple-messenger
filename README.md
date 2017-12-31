@@ -2,7 +2,9 @@
 
 Simple-Messenger uses flask-socketio to establish communication between clients.
 
-It contains a Makefile which lets start the server.
+It contains a Makefile which lets start the server as below.
+
+    make run
 
 Once started, to get the IP address of the server do the following.
 
